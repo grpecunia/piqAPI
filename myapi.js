@@ -106,17 +106,17 @@ app.use(function (err, req, res, next) {
   }
 }); // apt.use()
 
-process.on('SIGINT', function() {
-  var i;
+// process.on('SIGINT', function() {
+//   var i;
 
-  console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
+//   console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
 
-  console.log("closing GPIO...");
-  for (i in inputs) {
-    gpio.close(inputs[i].pin);
-  }
-  process.exit();
-});
+//   console.log("closing GPIO...");
+//   for (i in inputs) {
+//     gpio.close(inputs[i].pin);
+//   }
+//   process.exit();
+// });
 
 // ------------------------------------------------------------------------
 // Start Express App Server
