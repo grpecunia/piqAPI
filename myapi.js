@@ -5,50 +5,59 @@ const app       = express();
 
 //test input pin
 
-
-// input port objects for our example
-var inputs = [    { pin: '7', gpio: '7', value: [] },
-                  // { pin: '22', gpio: '25', value: 0 }
-                ];
-
-// -----------------------------------------------------------------------
-// open GPIO ports
-var i;
-for (i in inputs) {
-  console.log('opening GPIO port ' + inputs[i].gpio + ' on pin ' + inputs[i].pin + ' as input');
-  gpio.open(inputs[i].pin, "input", function (err) {
-    if (err) {
-      throw err;
-    }
-  });
-   // gpio.open
-} // if
-
-// /sys/devices/virtual/gpio/gpio%u/%s
-// nano quick2wire-gpio-admin/src/gpio-admin.c
-// int size = snprintf(path, PATH_MAX, "/sys/class/gpio/gpio%u/%s", pin, filename);
+gpio.open(7, "input", function (err) {
+  // Open pin 16 for output
+    gpio.read(7, function (err, value) {
+      if (err) throw err;
+      console.log(value); // The current state of the pin
+    });
+    gpio.close(7); // Close pin 16
+});
 
 
-// ------------------------------------------------------------------------
-// read and store the GPIO inputs on interval
-setInterval( function () {
-  gpio.read(inputs[0].pin, function (err, value) {
-    if (err) {
-      throw err;
-    }
-    console.log('read pin ' + inputs[0].pin + ' value = ' + value);
-    // update the inputs object
-    inputs[0].value = value.toString(); // store value as a string
-  });
+// // input port objects for our example
+// var inputs = [    { pin: '7', gpio: '4', value: [] },
+//                   // { pin: '22', gpio: '25', value: 0 }
+//                 ];
 
-  gpio.read(inputs[1].pin, function (err, value) {
-    if (err) {
-      throw err;
-    }
-    console.log('read pin ' + inputs[1].pin + ' value = ' + value);
-    inputs[1].value = value.toString();
-  });
-}, 15000); // setInterval
+// // -----------------------------------------------------------------------
+// // open GPIO ports
+// var i;
+// for (i in inputs) {
+//   console.log('opening GPIO port ' + inputs[i].gpio + ' on pin ' + inputs[i].pin + ' as input');
+//   gpio.open(inputs[i].pin, "input", function (err) {
+//     if (err) {
+//       throw err;
+//     }
+//   });
+//    // gpio.open
+// } // if
+
+// // /sys/devices/virtual/gpio/gpio%u/%s
+// // nano quick2wire-gpio-admin/src/gpio-admin.c
+// // int size = snprintf(path, PATH_MAX, "/sys/class/gpio/gpio%u/%s", pin, filename);
+
+
+// // ------------------------------------------------------------------------
+// // read and store the GPIO inputs on interval
+// setInterval( function () {
+//   gpio.read(inputs[0].pin, function (err, value) {
+//     if (err) {
+//       throw err;
+//     }
+//     console.log('read pin ' + inputs[0].pin + ' value = ' + value);
+//     // update the inputs object
+//     inputs[0].value = value.toString(); // store value as a string
+//   });
+
+//   gpio.read(inputs[1].pin, function (err, value) {
+//     if (err) {
+//       throw err;
+//     }
+//     console.log('read pin ' + inputs[1].pin + ' value = ' + value);
+//     inputs[1].value = value.toString();
+//   });
+// }, 15000); // setInterval
 
   
 
@@ -97,17 +106,17 @@ app.use(function (err, req, res, next) {
   }
 }); // apt.use()
 
-process.on('SIGINT', function() {
-  var i;
+// process.on('SIGINT', function() {
+//   var i;
 
-  console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
+//   console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
 
-  console.log("closing GPIO...");
-  for (i in inputs) {
-    gpio.close(inputs[i].pin);
-  }
-  process.exit();
-});
+//   console.log("closing GPIO...");
+//   for (i in inputs) {
+//     gpio.close(inputs[i].pin);
+//   }
+//   process.exit();
+// });
 
 // ------------------------------------------------------------------------
 // Start Express App Server
