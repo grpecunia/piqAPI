@@ -41,7 +41,7 @@ var inputs = [  { pin: '7', gpio: '4', values: [] } ];
 var i;
 for (i in inputs) {
   console.log('opening GPIO port ' + inputs[i].gpio + ' on pin ' + inputs[i].pin + ' as input');
-  gpio.open(inputs[i].pin, "input", function (err) {
+  gpio.open(inputs[i].pin, "output", function (err) {
     if (err) {
       throw err;
     }
