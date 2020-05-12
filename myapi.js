@@ -5,16 +5,16 @@ const app       = express();
 
 //test input pin
 
-gpio.open(4, "input", function (err) {
-  console.log("pin 4 is OPEN")
-  // Open pin 16 for output
-    gpio.read(4, function (err, value) {
+gpio.open(7, "input", function (err) {
+  console.log("pin 7 is OPEN")
+  // Open pin 7 for output
+    gpio.read(7, function (err, value) {
       console.log("reading pin value")
       if (err) throw err;
       console.log(value); // The current state of the pin
     });
     console.log("closing pin reading")
-    gpio.close(4); // Close pin 16
+    gpio.close(7); // Close pin 7
 });
 
 
