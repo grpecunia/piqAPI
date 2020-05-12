@@ -1,7 +1,7 @@
 const http      = require('http');
 const express   = require('express');
 const gpio      = require('pi-gpio');
-const Gpio = require("onoff").gpio;
+const Gpio = require("onoff").Gpio;
 const app       = express();
 
 //test input pin
