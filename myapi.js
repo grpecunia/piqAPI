@@ -18,8 +18,10 @@ for (i in inputs) {
       throw err;
     }
   });
+  gpio.close(inputs[i].pin);
    // gpio.open
 } // if
+
 
 // ------------------------------------------------------------------------
 // read and store the GPIO inputs on interval
@@ -42,7 +44,7 @@ setInterval( function () {
   });
 }, 15000); // setInterval
 
-  gpio.close(pin);
+  
 
 
 // ------------------------------------------------------------------------
