@@ -34,9 +34,7 @@ const app       = express();
 
 
 // input port objects for our example
-var inputs = [    { pin: '7', gpio: '4', value: null },
-                  // { pin: '22', gpio: '25', value: 0 }
-                ];
+var inputs = [  { pin: '7', gpio: '4', value: null } ];
 
 // // -----------------------------------------------------------------------
 // open GPIO ports
@@ -68,13 +66,13 @@ setInterval( function () {
     inputs[0].value = value.toString(); // store value as a string
   });
 
-  gpio.read(inputs[1].pin, function (err, value) {
-    if (err) {
-      throw err;
-    }
-    console.log('read pin ' + inputs[1].pin + ' value = ' + value);
-    inputs[1].value = value.toString();
-  });
+  // gpio.read(inputs[1].pin, function (err, value) {
+  //   if (err) {
+  //     throw err;
+  //   }
+  //   console.log('read pin ' + inputs[1].pin + ' value = ' + value);
+  //   inputs[1].value = value.toString();
+  // });
 }, 15000); // setInterval
 
   
