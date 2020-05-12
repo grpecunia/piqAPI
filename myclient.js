@@ -1,7 +1,7 @@
 window.onload = function () {
   var url,
     i,
-    ports = [7];  // the GPIO ports we will read
+    ports = [4];  // the GPIO ports we will read
 
   for (i in ports) {
     $('#input_' + ports[i]).html('loading port ' + ports[i] + ' value...');
