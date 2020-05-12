@@ -4,19 +4,35 @@ const gpio      = require('pi-gpio');
 const Gpio = require("onoff").Gpio;
 const app       = express();
 
+var sensor = require("ds18x20");
+//***need to add your own sensor's Id****
+// The Id of the sensor can be found in  /sys/bus/w1/devices/
+// The Id will start with  28- as in the example below
+var sensorId = "28-011938088701";
+
+writeMessage = (res) => {
+  sensor.get(sensorId, function (err, temp) {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    res.write("data: " + temp + "\n\n");
+  });
+}
+
 //test input pin
 
-gpio.open(7, "input", function (err) {
-  console.log("pin 7 is OPEN")
-  // Open pin 7 for output
-    gpio.read(7, function (err, value) {
-      console.log("reading pin value")
-      if (err) throw err;
-      console.log(value); // The current state of the pin
-    });
-    // gpio.close(7); // Close pin 7
-    // console.log("closing pin reading")
-});
+// gpio.open(7, "input", function (err) {
+//   console.log("pin 7 is OPEN")
+//   // Open pin 7 for output
+//     gpio.read(7, function (err, value) {
+//       console.log("reading pin value")
+//       if (err) throw err;
+//       console.log(value); // The current state of the pin
+//     });
+//     // gpio.close(7); // Close pin 7
+//     // console.log("closing pin reading")
+// });
 
 
 // // input port objects for our example
@@ -122,16 +138,16 @@ app.use(function (err, req, res, next) {
 //   process.exit();
 // });
 
-process.on("SIGINT", function () {
+// process.on("SIGINT", function () {
 
-  console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
+//   console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
 
-  console.log("closing GPIO...");
+//   console.log("closing GPIO...");
   
-    gpio.close(7);
+//     gpio.close(7);
   
-  process.exit();
-});
+//   process.exit();
+// });
 
 // ------------------------------------------------------------------------
 // Start Express App Server
