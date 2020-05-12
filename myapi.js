@@ -3,20 +3,20 @@ const express   = require('express');
 const gpio      = require('pi-gpio');
 const Gpio = require("onoff").Gpio;
 const app       = express();
-const sensor = require("ds18x20");
+// const sensor = require("ds18x20");
 
 
-let sensorId1 = "28-011938088701";
+// let sensorId1 = "28-011938088701";
 
-writeMessage = (res) => {
-  sensor.get(sensorId1, function (err, temp) {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    res.write("data: " + temp + "\n\n");
-  });
-}
+// writeMessage = (res) => {
+//   sensor.get(sensorId1, function (err, temp) {
+//     if (err) {
+//       console.log(err);
+//       return;
+//     }
+//     res.write("data: " + temp + "\n\n");
+//   });
+// }
 
 //test input pin
 
@@ -33,23 +33,23 @@ writeMessage = (res) => {
 // });
 
 
-// // input port objects for our example
-// var inputs = [    { pin: '7', gpio: '4', value: [] },
-//                   // { pin: '22', gpio: '25', value: 0 }
-//                 ];
+// input port objects for our example
+var inputs = [    { pin: '7', gpio: '4', value: [] },
+                  // { pin: '22', gpio: '25', value: 0 }
+                ];
 
 // // -----------------------------------------------------------------------
-// // open GPIO ports
-// var i;
-// for (i in inputs) {
-//   console.log('opening GPIO port ' + inputs[i].gpio + ' on pin ' + inputs[i].pin + ' as input');
-//   gpio.open(inputs[i].pin, "input", function (err) {
-//     if (err) {
-//       throw err;
-//     }
-//   });
-//    // gpio.open
-// } // if
+// open GPIO ports
+var i;
+for (i in inputs) {
+  console.log('opening GPIO port ' + inputs[i].gpio + ' on pin ' + inputs[i].pin + ' as input');
+  gpio.open(inputs[i].pin, "input", function (err) {
+    if (err) {
+      throw err;
+    }
+  });
+   // gpio.open
+} // if
 
 // // /sys/devices/virtual/gpio/gpio%u/%s
 // // nano quick2wire-gpio-admin/src/gpio-admin.c
@@ -58,24 +58,24 @@ writeMessage = (res) => {
 
 // // ------------------------------------------------------------------------
 // // read and store the GPIO inputs on interval
-// setInterval( function () {
-//   gpio.read(inputs[0].pin, function (err, value) {
-//     if (err) {
-//       throw err;
-//     }
-//     console.log('read pin ' + inputs[0].pin + ' value = ' + value);
-//     // update the inputs object
-//     inputs[0].value = value.toString(); // store value as a string
-//   });
+setInterval( function () {
+  gpio.read(inputs[0].pin, function (err, value) {
+    if (err) {
+      throw err;
+    }
+    console.log('read pin ' + inputs[0].pin + ' value = ' + value);
+    // update the inputs object
+    inputs[0].value = value.toString(); // store value as a string
+  });
 
-//   gpio.read(inputs[1].pin, function (err, value) {
-//     if (err) {
-//       throw err;
-//     }
-//     console.log('read pin ' + inputs[1].pin + ' value = ' + value);
-//     inputs[1].value = value.toString();
-//   });
-// }, 15000); // setInterval
+  gpio.read(inputs[1].pin, function (err, value) {
+    if (err) {
+      throw err;
+    }
+    console.log('read pin ' + inputs[1].pin + ' value = ' + value);
+    inputs[1].value = value.toString();
+  });
+}, 15000); // setInterval
 
   
 
@@ -124,17 +124,17 @@ app.use(function (err, req, res, next) {
   }
 }); // apt.use()
 
-// process.on('SIGINT', function() {
-//   var i;
+process.on('SIGINT', function() {
+  var i;
 
-//   console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
+  console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
 
-//   console.log("closing GPIO...");
-//   for (i in inputs) {
-//     gpio.close(inputs[i].pin);
-//   }
-//   process.exit();
-// });
+  console.log("closing GPIO...");
+  for (i in inputs) {
+    gpio.close(inputs[i].pin);
+  }
+  process.exit();
+});
 
 // process.on("SIGINT", function () {
 
