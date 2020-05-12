@@ -1,6 +1,7 @@
 const http      = require('http');
 const express   = require('express');
 const gpio      = require('pi-gpio');
+const Gpio = require("onoff").gpio;
 const app       = express();
 
 //test input pin
@@ -13,8 +14,8 @@ gpio.open(7, "input", function (err) {
       if (err) throw err;
       console.log(value); // The current state of the pin
     });
-    console.log("closing pin reading")
     gpio.close(7); // Close pin 7
+    console.log("closing pin reading")
 });
 
 
