@@ -1,6 +1,6 @@
 const http      = require('http');
 const express   = require('express');
-const gpio      = require('pi-gpio');
+const wpi      = require('pi-gpio');
 const app       = express();
 
 // input port objects for our example
