@@ -3,8 +3,11 @@ const express   = require('express');
 const gpio      = require('pi-gpio');
 const app       = express();
 
+//test input pin
+
+
 // input port objects for our example
-var inputs = [    { pin: '7', gpio: '4', value: [] },
+var inputs = [    { pin: '7', gpio: '7', value: [] },
                   // { pin: '22', gpio: '25', value: 0 }
                 ];
 
@@ -20,6 +23,10 @@ for (i in inputs) {
   });
    // gpio.open
 } // if
+
+// /sys/devices/virtual/gpio/gpio%u/%s
+// nano quick2wire-gpio-admin/src/gpio-admin.c
+// int size = snprintf(path, PATH_MAX, "/sys/class/gpio/gpio%u/%s", pin, filename);
 
 
 // ------------------------------------------------------------------------
