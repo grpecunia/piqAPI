@@ -18,7 +18,6 @@ for (i in inputs) {
       throw err;
     }
   });
-  gpio.close(pin);
    // gpio.open
 } // if
 
@@ -42,6 +41,9 @@ setInterval( function () {
     inputs[1].value = value.toString();
   });
 }, 15000); // setInterval
+
+  gpio.close(pin);
+
 
 // ------------------------------------------------------------------------
 // configure Express to serve index.html and any other static pages stored 
