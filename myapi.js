@@ -61,7 +61,8 @@ setInterval( function () {
     if (err) {
       throw err;
     }
-    console.log('read pin ' + inputs[0].pin + ' value = ' + value[i]);
+    console.log('read pin ' + inputs[0].pin + ' value = ' + value[0]);
+    console.log("read pin " + inputs[0].pin + " value = " + value[1]);
     // update the inputs object
     inputs[0].value = value.toString(); // store value as a string
   });
