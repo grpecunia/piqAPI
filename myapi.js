@@ -1,66 +1,47 @@
-/**
- * myapi.js
- * 
- * @version 1.1 - April 2015
- *
- * 
- * DESCRIPTION:
- * an application to demonstrate running a node 
- * API Appserver on a Raspberry Pi to access GPIO I/O
- * Uses the Express and wiringPi node packages. 
- * 
- * 
- * @throws none
- * @see nodejs.org
- * @see express.org
- * 
- * @author Ceeb
- * (C) 2015 PINK PELICAN NZ LTD
- */
-
-var http      = require('http');
-var express   = require('express');
-// var gpio      = require('pi-gpio');
-
-var app       = express();
+const http      = require('http');
+const express   = require('express');
+const gpio      = require('pi-gpio');
+const app       = express();
 
 // input port objects for our example
-var inputs = [    { pin: '16', gpio: '23', value: 1 },
-                  { pin: '22', gpio: '25', value: 0 }
-                ];
+// var inputs = [    { pin: '16', gpio: '23', value: 1 },
+//                   { pin: '22', gpio: '25', value: 0 }
+//                 ];
+
+var inputs;
 
 // -----------------------------------------------------------------------
 // open GPIO ports
-// var i;
-// for (i in inputs) {
-//   console.log('opening GPIO port ' + inputs[i].gpio + ' on pin ' + inputs[i].pin + ' as input');
-//   gpio.open(inputs[i].pin, "input", function (err) {
-//     if (err) {
-//       throw err;
-//     }
-//   }); // gpio.open
-// } // if
+var i;
+for (i in inputs) {
+  console.log('opening GPIO port ' + inputs[i].gpio + ' on pin ' + inputs[i].pin + ' as input');
+  gpio.open(inputs[i].pin, "input", function (err) {
+    if (err) {
+      throw err;
+    }
+  }); // gpio.open
+} // if
 
 // ------------------------------------------------------------------------
 // read and store the GPIO inputs twice a second
-// setInterval( function () {
-//   gpio.read(inputs[0].pin, function (err, value) {
-//     if (err) {
-//       throw err;
-//     }
-//     console.log('read pin ' + inputs[0].pin + ' value = ' + value);
-//     // update the inputs object
-//     inputs[0].value = value.toString(); // store value as a string
-//   });
+setInterval( function () {
+  gpio.read(inputs[0].pin, function (err, value) {
+    if (err) {
+      throw err;
+    }
+    console.log('read pin ' + inputs[0].pin + ' value = ' + value);
+    // update the inputs object
+    inputs[0].value = value.toString(); // store value as a string
+  });
 
-//   gpio.read(inputs[1].pin, function (err, value) {
-//     if (err) {
-//       throw err;
-//     }
-//     console.log('read pin ' + inputs[1].pin + ' value = ' + value);
-//     inputs[1].value = value.toString();
-//   });
-// }, 500); // setInterval
+  gpio.read(inputs[1].pin, function (err, value) {
+    if (err) {
+      throw err;
+    }
+    console.log('read pin ' + inputs[1].pin + ' value = ' + value);
+    inputs[1].value = value.toString();
+  });
+}, 15000); // setInterval
 
 // ------------------------------------------------------------------------
 // configure Express to serve index.html and any other static pages stored 
@@ -106,17 +87,17 @@ app.use(function (err, req, res, next) {
   }
 }); // apt.use()
 
-// process.on('SIGINT', function() {
-//   var i;
+process.on('SIGINT', function() {
+  var i;
 
-//   console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
+  console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
 
-//   console.log("closing GPIO...");
-//   for (i in inputs) {
-//     gpio.close(inputs[i].pin);
-//   }
-//   process.exit();
-// });
+  console.log("closing GPIO...");
+  for (i in inputs) {
+    gpio.close(inputs[i].pin);
+  }
+  process.exit();
+});
 
 // ------------------------------------------------------------------------
 // Start Express App Server
