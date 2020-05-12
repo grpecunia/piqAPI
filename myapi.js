@@ -14,8 +14,8 @@ gpio.open(7, "input", function (err) {
       if (err) throw err;
       console.log(value); // The current state of the pin
     });
-    gpio.close(7); // Close pin 7
-    console.log("closing pin reading")
+    // gpio.close(7); // Close pin 7
+    // console.log("closing pin reading")
 });
 
 
@@ -121,6 +121,17 @@ app.use(function (err, req, res, next) {
 //   }
 //   process.exit();
 // });
+
+process.on("SIGINT", function () {
+
+  console.log("\nGracefully shutting down from SIGINT (Ctrl+C)");
+
+  console.log("closing GPIO...");
+  
+    gpio.close(7);
+  
+  process.exit();
+});
 
 // ------------------------------------------------------------------------
 // Start Express App Server
