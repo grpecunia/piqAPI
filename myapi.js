@@ -3,15 +3,13 @@ const express   = require('express');
 const gpio      = require('pi-gpio');
 const Gpio = require("onoff").Gpio;
 const app       = express();
+const sensor = require("ds18x20");
 
-var sensor = require("ds18x20");
-//***need to add your own sensor's Id****
-// The Id of the sensor can be found in  /sys/bus/w1/devices/
-// The Id will start with  28- as in the example below
-var sensorId = "28-011938088701";
+
+let sensorId1 = "28-011938088701";
 
 writeMessage = (res) => {
-  sensor.get(sensorId, function (err, temp) {
+  sensor.get(sensorId1, function (err, temp) {
     if (err) {
       console.log(err);
       return;
