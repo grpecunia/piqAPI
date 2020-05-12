@@ -4,11 +4,9 @@ const gpio      = require('pi-gpio');
 const app       = express();
 
 // input port objects for our example
-// var inputs = [    { pin: '16', gpio: '23', value: 1 },
-//                   { pin: '22', gpio: '25', value: 0 }
-//                 ];
-
-var inputs;
+var inputs = [    { pin: '07', gpio: '04', value: null },
+                  // { pin: '22', gpio: '25', value: 0 }
+                ];
 
 // -----------------------------------------------------------------------
 // open GPIO ports
@@ -23,7 +21,7 @@ for (i in inputs) {
 } // if
 
 // ------------------------------------------------------------------------
-// read and store the GPIO inputs twice a second
+// read and store the GPIO inputs on interval
 setInterval( function () {
   gpio.read(inputs[0].pin, function (err, value) {
     if (err) {
