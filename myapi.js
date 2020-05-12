@@ -17,7 +17,9 @@ for (i in inputs) {
     if (err) {
       throw err;
     }
-  }); // gpio.open
+  });
+  gpio.close(pin);
+   // gpio.open
 } // if
 
 // ------------------------------------------------------------------------
